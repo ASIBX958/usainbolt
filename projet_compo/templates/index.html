@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block titre %}Produits{% endblock %}
+
+{% block contenu %}
+    {% if session['utilisateur'] %}
+        <h1>Bienvenue, {{ session['utilisateur'] }} !</h1>
+        <p>Heureux de vous revoir sur notre site.</p>
+        <h2>Découvrez nos produits exceptionnels.<h2>
+    {% else %}
+        <h1>Bienvenue sur notre site !</h1>
+        <p>Découvrez nos produits exceptionnels.</p>
+    {% endif %}
+
+    <h1>Liste des produits</h1>
+    <div class="produits">
+        {% for produit in produits %}
+            <div class="produit">
+                <img src="{{ url_for('static', filename=produit.image) }}" alt="{{ produit.nom }}">
+                <h2>{{ produit.nom }}</h2>
+                <p>{{ produit.description }}</p>
+                <p>Prix : {{ produit.prix }} FCFA</p>
+                <a href="{{ url_for('produit_details', produit_id=produit.id) }}">Voir les détails du produit</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
